@@ -16,12 +16,14 @@ class PostCatController extends Controller
   public function getCategoryList($list="", $sel="")
   {
     //echo "sjdhf sjdfhsjdf";exit;
-    $categories="";$output="";
+    $categories="";
+    $output="";
     $parents = $this->getParent();
 
     if(!empty($parents))
     {
       //print_r($parents);exit;
+      $categories = array();
       foreach($parents as $p)
       {
         $prod_sel='';
@@ -90,7 +92,7 @@ class PostCatController extends Controller
   public function getProductType($parent, $sel="")
   {
     $cat = array();
-    $psc = Psc_relation::where('parent', '=', $parent)->get();
+    //$psc = Psc_relation::where('parent', '=', $parent)->get();
     if(!empty($psc))
     {
       foreach($psc as $p)

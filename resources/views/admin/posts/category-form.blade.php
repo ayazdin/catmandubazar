@@ -3,7 +3,7 @@
         <h3 class="box-title">Add Category</h3>
       </div>
 
-      <form class="form-horizontal" name="frmAddCategory" id="frmAddCategory" action="/admin/post/store-category" method="post">
+      <form class="form-horizontal" name="frmAddCategory" id="frmAddCategory" action="/admin/product/store-category" method="post">
         @if(!empty($editcat))
           <input type="hidden" name="catid" value="{{ $editcat->id }}">
         @endif
@@ -24,7 +24,9 @@
                   @if(!empty($postcat) and count($postcat)>0)
                     @foreach ($postcat as $cat)
                         @if(!empty($editcat))
-                          <option value="{{$cat['id']}}" @if($cat['id']==$editcat->parent) selected  @endif>{{$cat['name']}}</option>
+                          <option value="{{$cat['id']}}" @if($cat['id']==$editcat->parent) selected  @endif
+                          @if($cat['id']==$editcat->id) disabled  @endif
+                                  >{{$cat['name']}}</option>
                         @else
                           <option value="{{$cat['id']}}">{{$cat['name']}}</option>
                         @endif

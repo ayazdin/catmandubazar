@@ -37,7 +37,7 @@
                 <td>{!! $page->created_at!!}</td>
               	<td>
 									<a href="/admin/page/edit/{{$page->id}}">Edit</a> |
-									<a href="/admin/post/delete/{{$page->id}}">Delete</a>
+									<a href="/admin/page/delete/{{$page->id}}">Delete</a>
 								</td>
               </tr>
 							@endforeach

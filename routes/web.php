@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
 
 Auth::routes();
 
@@ -66,18 +66,53 @@ Route::group(['prefix' => '/admin/page/'], function () {
   Route::get('add', ['uses' => 'Posts\PageController@createPage'])->middleware('admin');
   Route::get('edit/{id}', ['uses' => 'Posts\PageController@createPage'])->middleware('admin');
   Route::post('store', ['uses' => 'Posts\PageController@store'])->middleware('admin');
+  Route::get('delete/{id}',['uses'=>'Posts\PageController@destroyPage'])->middleware('admin');
 });
 
 Route::group(['prefix' => 'admin/product/'], function () {
+
+  //product
   Route::get('list', ['as' => 'list', 'uses' => 'Posts\PostsController@indexProduct'])->middleware('admin');
   Route::get('add', ['as' => 'add', 'uses' => 'Posts\PostsController@createProduct'])->middleware('admin');
+  Route::post('store', ['as' => 'store', 'uses' => 'Posts\PostsController@store'])->middleware('admin');
   Route::get('edit/{id}', ['as' => 'edit/{id}', 'uses' => 'Posts\PostsController@editProduct'])->middleware('admin');
+  Route::get('delete/{id}',['uses'=>'Posts\PostsController@destroyPost'])->middleware('admin');
+
+
+  //product category
   Route::get('category/add', ['as' => 'category/add', 'uses' => 'Posts\PostsController@createProductCategory'])->middleware('admin');
+  Route::get('category/add/{id}', ['as' => 'category/add/{id}', 'uses' => 'Posts\PostsController@createProductCategory'])->middleware('admin');
+  Route::post('store-category',['as' => 'store-category', 'uses' => 'Posts\PostsController@storeCategory'])->middleware('admin');
+  Route::get('category/delete/{id}', ['as' => 'category/delete/{id}', 'uses' => 'Posts\PostsController@destroyCategory'])->middleware('admin');
+
+  //Branding
+  Route::get('brand',['as'=>'brand','uses'=>'Posts\PostsController@brandIndex'])->middleware('admin');
+  Route::get('brand/{id}',['as'=>'brand/{id}','uses'=>'Posts\PostsController@brandIndex'])->middleware('admin');
+  Route::get('brand/delete/{id}',['as'=>'brand/delete/{id}','uses'=>'Posts\PostsController@branddestroy'])->middleware('admin');
+  Route::post('brand-store',['as'=>'brand-store','uses'=>'Posts\PostsController@brandstore'])->middleware('admin');
+
+
+
   Route::get('type/add', ['as' => 'type/add', 'uses' => 'Posts\PostsController@createProductType'])->middleware('admin');
-  Route::get('category/add/{id}', ['as' => 'category/add/{id}', 'uses' => 'Admin\Posts\PostsController@createProductCategory'])->middleware('admin');
   Route::get('type/add/{id}', ['as' => 'type/add/{id}', 'uses' => 'Admin\Posts\PostsController@createProductType'])->middleware('admin');
   Route::get('type/relation/{id}', ['as' => 'type/relation/{id}', 'uses' => 'Admin\Posts\PostsController@getSubsOfProductType'])->middleware('admin');
-  Route::get('category/delete/{id}', ['as' => 'category/delete/{id}', 'uses' => 'Admin\Posts\PostsController@destroyCategory'])->middleware('admin');
   Route::get('order-list/', ['as' => 'order-list/', 'uses' => 'Admin\Posts\PostsController@getProductOrderList'])->middleware('admin');
   Route::get('view-order/{orderid}', ['as' => 'view-order/{orderid}', 'uses' => 'Admin\Posts\PostsController@getProductOrderView'])->middleware('admin');
 });
+
+
+
+/*
+ * Routes for Frontend
+ */
+Route::group(
+    [
+      'prefix'  =>'/',
+      'as' => 'frontend.'
+    ],
+    function(){
+      Route::get('','Frontend\FrontendController@getHomePage')->name('getHomePage');
+      Route::get('product/{slug}','Frontend\FrontendController@produtDetail')->name('produtDetail');
+
+      Route::post('product-enquiry','Frontend\FrontendController@productEnquiry')->name('productEnquiry');
+    });

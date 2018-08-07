@@ -135,7 +135,7 @@
           </ul>
         </li>-->
 
-        <li class="treeview">
+        <li class="active treeview">
           <a href="/admin/product/list">
             <i class="fa fa-file-text"></i> <span>Products</span>
             <span class="pull-right-container">
@@ -157,6 +157,12 @@
             <li>
               <a href="/admin/product/category/add">
                 <i class="fa fa-puzzle-piece"></i> <span>Category</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/admin/product/brand">
+                <i class="fa fa-puzzle-piece"></i> <span>Brand</span>
               </a>
             </li>
             <!-- <li>
