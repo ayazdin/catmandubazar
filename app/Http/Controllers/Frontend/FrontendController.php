@@ -32,4 +32,18 @@ class FrontendController extends Controller
     public function productEnquiry(Request $request){
         dd($request);
     }
+
+    public static function getProductPrice($id){
+        $prodprice = Postmeta::where('postid', $id)
+                            ->where('meta_key', '=', 'price')
+                            ->first();
+
+        $prodcurrency = Postmeta::where('postid', $id)
+                        ->where('meta_key', '=', 'currency')
+                        ->first();
+
+        $output = $prodcurrency->meta_value.' '.$prodprice->meta_value;
+
+        echo $output;
+    }
 }

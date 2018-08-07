@@ -1,3 +1,17 @@
+<?php
+$price="";$currency="";
+if(!empty($postmeta))
+{
+    foreach($postmeta as $pm)
+    {
+        if($pm->meta_key=='price')
+            $price = $pm->meta_value;
+        if($pm->meta_key=='currency')
+            $currency = $pm->meta_value;
+    }
+}
+?>
+
 <div class="row mar-bot-30 featured">
     <div class="block-ttl auto-search col-sm-12">
         <h2><span>Our Products</span> <hr></h2>
@@ -15,6 +29,27 @@
                     <a href="{{ URL::to('product/'.$product->clean_url) }}" title="{{ $product->title }}">
                         <div class="ima" style="background-image:url('{{ URL::to($prodImage) }}')"></div>
                     </a>
+                    <div class="switch">
+                        <a href="{{ URL::to('product/'.$product->clean_url) }}" title="{{ $product->title }}">
+                        <div class="overlay"></div>
+                            </a>
+
+                        <div class="button-group">
+                            {{--<a href="#" title="Add to Cart" class="addtocart" data-url="http://yala.dac.technocreates.net/product/ajax/add-product/195/1">
+                                <i class="fa fa-cart-plus"></i>
+                                add to cart
+                            </a>--}}
+                            <a href="javascript:void(0)" class="addtocart" data-toggle="modal" data-target="#exampleModal_{{$product->id}}">
+                                Enquiry
+                            </a>
+                            <a class="wishlist" href="javascript:void(0)" title="Price">
+                                <i class="fa fa-tag"></i>
+                                {{ App\Http\Controllers\Frontend\FrontendController::getProductPrice($product->id) }}
+
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="f-right">
                     <h3>
@@ -22,13 +57,6 @@
                             {{$product->title}}
                         </a>
                     </h3>
-                    <p>
-                        {{ str_limit($product->excerpt,80)  }}
-                        {{--{{$product->excerpt}}--}}
-                    </p>
-                    <a href="javascript:void(0)" class="btn btn-success home-btn" data-toggle="modal" data-target="#exampleModal_{{$product->id}}">
-                        Enquiry
-                    </a>
                 </div>
 
                 <!-- Modal -->
