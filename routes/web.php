@@ -113,6 +113,5 @@ Route::group(
     function(){
       Route::get('','Frontend\FrontendController@getHomePage')->name('getHomePage');
       Route::get('product/{slug}','Frontend\FrontendController@produtDetail')->name('produtDetail');
-
       Route::post('product-enquiry','Frontend\FrontendController@productEnquiry')->name('productEnquiry');
     });
