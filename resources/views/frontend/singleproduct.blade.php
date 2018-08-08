@@ -69,11 +69,13 @@ if(!empty($postmeta)){
                         <?php if($images!=""){
                             $imgArr = unserialize($images);
                             foreach($imgArr as $img){
+                            if($img!=''){
                             ?>
                             <div class="carousel-item">
                                 <img class="d-block w-100" src="{{url::to($img)}}" alt="Second slide">
                             </div>
                             <?php }
+                        }
                         }?>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

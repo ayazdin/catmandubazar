@@ -60,6 +60,7 @@ Route::post('register', [
 ]);*/
 
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/home', 'HomeController@index')->name('dashboard');
 
 Route::group(['prefix' => '/admin/page/'], function () {
   Route::get('list', ['uses' => 'Posts\PageController@indexPage'])->middleware('admin');
