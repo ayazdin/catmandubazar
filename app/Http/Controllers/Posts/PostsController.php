@@ -175,12 +175,11 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function justStore($data)
     {
-      //print_r($request['menuorder']);exit;
-        try{
-            if(Auth::check())
-        	    	$user = Auth::user();
+      if(Auth::check())
+                $user = Auth::user();
             if($request['postid']!="")
               $posts = Posts::where('id', $request['postid'])->first();
             else
@@ -211,7 +210,14 @@ class PostsController extends Controller
               $posts->update();
             else
               $posts->save();
+    }
 
+    public function store(Request $request)
+    {
+      //print_r($request['menuorder']);exit;
+        try{
+            
+            justStore($request);
               //print_r($request['category']);exit;
             if($request['optionNumber']!="")
               $optNameList = explode(",", $request['optionNumber']);

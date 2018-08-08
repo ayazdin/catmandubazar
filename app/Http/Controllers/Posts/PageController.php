@@ -57,49 +57,8 @@ class PageController extends Controller
     public function store(Request $request)
     {
       $pc = new PostsController();
-      try{
-          if(Auth::check())
-              $user = Auth::user();
-          if($request['postid']!="")
-            $posts = Posts::where('id', $request['postid'])->first();
-          else
-            $posts = new Posts();
 
-          $posts->title = $request['prodTitle'];
-          if(empty($request['prodSlug']))
-            $posts->clean_url = $pc->generateSeoURL($request['prodTitle']);
-          else
-            $posts->clean_url = $request['prodSlug'];
-
-          if($request['description']!="")
-            $posts->content = $request['description'];
-          if($request['excerpt']!="")
-            $posts->excerpt = $request['excerpt'];
-
-          $posts->status = $request['rdoPublish'];
-          $posts->ctype = $request['ctype'];
-          $posts->userid = $user->id;
-          if($request['featuredimage']!="")
-            $posts->image = $request['featuredimage'];
-
-          if($request['postid']!="")
-            $posts->update();
-          else
-            $posts->save();
-          $pc->addAttributes('keywords', $request['keywords'], $posts->id);
-          $pc->addAttributes('metadesc', $request['metadesc'], $posts->id);
-          //$pc->addAttributes('author_post', $request['author_post'], $posts->id);
-          //$pc->addAttributes('enterby', $request['enterby'], $posts->id);
-      }
-      catch ( Illuminate\Database\QueryException $e) {
-          var_dump($e->errorInfo);
-          $request->session()->flash('fail', 'Due to some technical issues the request cannot be done!!!');
-      }
-      if($request['postid']!="")
-        $request->session()->flash('succ', 'One item updated successfully!!!');
-      else
-        $request->session()->flash('succ', 'One item added successfully!!!');
-      return back();
+      
       //return redirect('/admin/product/add');
     }
 
