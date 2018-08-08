@@ -123,7 +123,7 @@
 
 @push('adminjs')
 <!-- Select2 -->
-<script src="/dist/js/select2.full.min.js"></script>
+<script src="{{url('/dist/js/select2.full.min.js')}}"></script>
 <script>
 $(function () {
 	$('.select2').select2()

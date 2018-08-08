@@ -1,5 +1,5 @@
 @push('admincss')
-<link rel="stylesheet" href="/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{url('/dist/css/select2.min.css')}}">
 @endpush
 @if(!empty($postcat) and count($postcat)>0)
   @foreach ($postcat as $cat)

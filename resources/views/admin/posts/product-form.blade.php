@@ -1,5 +1,5 @@
 @push('admincss')
-<link rel="stylesheet" href="/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{url('/dist/css/select2.min.css')}}">
 @endpush
 <div class="box box-primary">
       <div class="box-header with-border">
@@ -66,7 +66,7 @@
 
     @push('adminjs')
     <!-- Select2 -->
-    <script src="/dist/js/select2.full.min.js"></script>
+<script src="{{url('/dist/js/select2.full.min.js')}}"></script>
     <script>
     $(function () {
     	$('.select2').select2()

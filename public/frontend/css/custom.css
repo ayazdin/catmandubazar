@@ -26,7 +26,7 @@ a:focus, a:hover {
 /*product listing hover effect*/
  .featured .switch .overlay{
      background: rgba(0, 0, 0, 0.5);
-     width: 90%;
+     width: 89.5%;
      height: 58%;
      opacity: 0;
      position: absolute;

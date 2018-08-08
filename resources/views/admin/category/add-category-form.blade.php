@@ -1,5 +1,5 @@
 @push('admincss')
-<link rel="stylesheet" href="/dist/css/select2.min.css">
+<link rel="stylesheet" href="{{url('/dist/css/select2.min.css')}}">
 @endpush
 <div class="content-wrapper">
 	<!-- Content Header -->

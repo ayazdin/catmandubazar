@@ -16,7 +16,7 @@ class FrontendController extends Controller
 
         $products = Posts::where('ctype', '=', 'product')
                             ->where('status', '=', 'publish')
-                            ->orderBy('created_at', 'DESC')->limit(3)->get();
+                            ->orderBy('created_at', 'DESC')->get();
         return view('frontend.home')->with('products',$products);
     }
 
