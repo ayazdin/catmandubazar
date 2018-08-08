@@ -3,7 +3,7 @@
         <h3 class="box-title">Add Category</h3>
       </div>
 
-      <form class="form-horizontal" name="frmAddCategory" id="frmAddCategory" action="/admin/product/store-category" method="post">
+      <form class="form-horizontal" name="frmAddCategory" id="frmAddCategory" action="{{url('/admin/product/store-category')}}" method="post">
         @if(!empty($editcat))
           <input type="hidden" name="catid" value="{{ $editcat->id }}">
         @endif
