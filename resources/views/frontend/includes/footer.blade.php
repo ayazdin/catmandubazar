@@ -54,9 +54,11 @@
                     <h4>Copyright &copy; 2018. All Rights Reserved.</h4>
                 </div>
                 <div class="col-sm-6">
-                    <p class="pull-right"> Designed &amp; Hosted by : <a href="http://digitalagencycatmandu.com/" target="_blank">
-                            <img src="{{ URL::to('frontend/images/footer-logo.png') }}" alt="Digital Agency Catmandu" class="img-responsive">Digital Agency Catmandu
-                        </a></p>
+                    <p class="pull-right"> Designed &amp; Hosted by :
+                        <a href="http://digitalagencycatmandu.com/" target="_blank">
+                            <img src="{{ URL::to('frontend/images/footer-logo.png') }}" alt="Digital Agency Catmandu" class="img-responsive">DAC
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>

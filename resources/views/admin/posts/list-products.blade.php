@@ -45,8 +45,8 @@
 										@endif
 								</td>
               	<td>
-									<a href="/admin/product/edit/{{$product->id}}">Edit</a> |
-									<a href="#" data-href="/admin/product/delete/{{$product->id}}" data-toggle="modal" data-target="#confirm-delete">Delete</a>
+									<a href="{{url('/admin/product/edit/'.$product->id)}}">Edit</a> |
+									<a href="#" data-href="{{url('/admin/product/delete/'.$product->id)}}" data-toggle="modal" data-target="#confirm-delete">Delete</a>
 								</td>
               </tr>
 							@endforeach

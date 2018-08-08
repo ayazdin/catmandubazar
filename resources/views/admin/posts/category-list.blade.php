@@ -6,8 +6,8 @@
   <div class="box box-primary collapsed-box">
     <div class="box-header with-border">
       <h3 class="box-title">{{$cat['name']}} -
-        <a href="/admin/product/category/add/{{$cat['id']}}">Edit</a> |
-        <a href="/admin/product/category/delete/{{$cat['id']}}">Delete</a>
+        <a href="{{url('/admin/product/category/add/'.$cat['id'])}}">Edit</a> |
+        <a href="{{url('/admin/product/category/delete/'.$cat['id'])}}">Delete</a>
       </h3>
 
       <div class="box-tools pull-right collapsed-box">
@@ -37,8 +37,8 @@
             <td>@if($sb['image']!="") <img src="{{$sb['image']}}" width="40" alt="{{ $sb['name'] }}"> @endif</td>
             <td>{{$sb['slug']}}</td>
             <td>
-              <a href="/admin/product/category/add/{{$sb['id']}}">Edit</a> |
-              <a href="/admin/product/category/delete/{{$sb['id']}}">Delete</a>
+              <a href="{{url('/admin/product/category/add/'.$sb['id'])}}">Edit</a> |
+              <a href="{{url('/admin/product/category/delete/'.$sb['id'])}}">Delete</a>
             </td>
           </tr>
           <tr id="accordion{{$sb['id']}}" class="collapse">
@@ -74,7 +74,7 @@
                         >
                           Edit
                         </a> |
-                        <a href="/admin/product/category/delete/{{$pt['id']}}">Delete</a>
+                        <a href="{{url('/admin/product/category/delete/'.$pt['id'])}}">Delete</a>
                       </td>
                     </tr>
                     @endforeach
@@ -109,7 +109,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="/admin/post/store-product-type" method="post" name="frmEnquiry">
+            <form action="{{url('/admin/post/store-product-type')}}" method="post" name="frmEnquiry">
             <input type="hidden" name="catid" id="catid" value="">
             <input type="hidden" name="categoryType" value="product">
             <div class="modal-body mx-3">
