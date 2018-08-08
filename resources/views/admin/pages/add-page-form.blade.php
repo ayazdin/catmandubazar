@@ -15,7 +15,7 @@ if(!empty($post))
 
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
-  <form class="form-horizontal" name="frmAddPost" action="/admin/page/store" method="post">
+  <form class="form-horizontal" name="frmAddPost" action="{{url('/admin/page/store')}}" method="post">
 	<section class="content-header">
 		<div class="row">
 			<div class="col-xs-8">

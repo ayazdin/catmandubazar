@@ -50,7 +50,7 @@ if(!empty($postmeta))
 
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
-  <form class="form-horizontal" name="frmAddPost" action="/admin/post/store" method="post">
+  <form class="form-horizontal" name="frmAddPost" action="/admin/product/store" method="post">
 	<section class="content-header">
 		<div class="row">
 			<div class="col-xs-8">

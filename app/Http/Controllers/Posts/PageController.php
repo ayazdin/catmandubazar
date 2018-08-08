@@ -54,12 +54,30 @@ class PageController extends Controller
                                                               ->with('postmeta', $post->postmeta);
     }
 
-    public function store(Request $request)
+
+    /* 
+     * Storing the form data, for page and opening it in edit mode
+     * 
+     * returns redirection to edit page
+    */    
+    public function store(Request $req)
     {
       $pc = new PostsController();
+      $postId = $pc->justStore($req);            
+      return redirect('/admin/page/edit/'.$postId);
+    }
 
-      
-      //return redirect('/admin/product/add');
+    public function destroyPage($id)
+    {
+
+        try {
+            Cat_relation::where('postid', $id)->delete();
+            Postmeta::where('postid', $id)->delete();
+            Posts::destroy($id);
+        } catch ( Illuminate\Database\QueryException $e) {
+            var_dump($e->errorInfo);
+        }
+        return back()->with('succ', 'One item deleted');
     }
 
 }

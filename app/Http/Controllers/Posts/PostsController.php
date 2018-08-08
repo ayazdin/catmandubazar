@@ -6,6 +6,7 @@ use App\Models\Posts;
 use App\Models\Postcat;
 use App\Models\Postmeta;
 use App\Models\Cat_relation;
+use App\Models\Brands;
 use App\Models\Psc_relation;
 use DB;
 use App\Http\Controllers\Posts\PostCatController;
@@ -21,6 +22,8 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    
     public function indexProduct()
     {
       $products = Posts::where('ctype', '=', 'product')
@@ -63,7 +66,7 @@ class PostsController extends Controller
      */
     public function editProduct($id)
     {
-        $sel="";
+        //$sel="";
         $catCtrl = new PostCatController();
         //$postcat = Postcat::where('parent','=', '0')->orderBy('catorder', 'ASC')->get();
         $post = Posts::where('id', $id)->first();
@@ -169,14 +172,13 @@ class PostsController extends Controller
                                                     ->with('categoryType', 'product');
     }
 
-    /**
-     * Store a newly created product in storage.
+    
+    /* 
+     * Sub-routine for storing page form data only
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    public function justStore($data)
+     * Returns post id
+    */ 
+    public function justStore(Request $request)
     {
       if(Auth::check())
                 $user = Auth::user();
@@ -210,14 +212,21 @@ class PostsController extends Controller
               $posts->update();
             else
               $posts->save();
+            return $posts->id;
     }
+
+    /**
+     * Store a newly created product in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
     public function store(Request $request)
     {
       //print_r($request['menuorder']);exit;
         try{
-            
-            justStore($request);
+            $postId = $this->justStore($request);
               //print_r($request['category']);exit;
             if($request['optionNumber']!="")
               $optNameList = explode(",", $request['optionNumber']);
@@ -228,6 +237,7 @@ class PostsController extends Controller
 
             if(!empty($optionNames))
             {
+                $options = array();
               foreach($optNameList as $onl)
               {
                 if($optionNames[$icount]!="")
@@ -259,47 +269,47 @@ class PostsController extends Controller
                array_push($combiArr, $temp);
             }
             //print_r($combiArr);exit;
-            $this->addAttributes('priceOption', serialize($combiArr), $posts->id);
+            $this->addAttributes('priceOption', serialize($combiArr), $postId);
             //print_r($request['category']);exit;
             if(!empty($request['category']))
-              $this->addCategoryRelation($request['category'], $posts->id);
+              $this->addCategoryRelation($request['category'], $postId);
 
-            $this->removeSliderItems($posts->id);
+            $this->removeSliderItems($postId);
             //exit;
             if($request['sliders']!="")
             {
-              $this->addSliderItems($request['sliders'], $posts->id);
+              $this->addSliderItems($request['sliders'], $postId);
             }
 
 
             if($options!="")
-              $this->addAttributes('options', serialize($options), $posts->id);
-            $this->addAttributes('isFeatured', $request['isfeatured'], $posts->id);
-            $this->addAttributes('hashtags', $request['prodTags'], $posts->id);
-            $this->addAttributes('price', $request['prodPrice'], $posts->id);
-            $this->addAttributes('keywords', $request['keywords'], $posts->id);
-            $this->addAttributes('metadesc', $request['metadesc'], $posts->id);
-            $this->addAttributes('currency', $request['currency'], $posts->id);
-            $this->addAttributes('price', $request['prodPrice'], $posts->id);
-            $this->addAttributes('purchase', $request['prodPurchase'], $posts->id);
-            $this->addAttributes('quantity', $request['prodqty'], $posts->id);
-            $this->addAttributes('stock', $request['stock'], $posts->id);
-            $this->addAttributes('purchase', $request['prodPurchase'], $posts->id);
-            //$this->addAttributes('currency', $request['currency'], $posts->id);
+            $this->addAttributes('options', serialize($options), $postId);
+            $this->addAttributes('isFeatured', $request['isfeatured'], $postId);
+            $this->addAttributes('hashtags', $request['prodTags'], $postId);
+            $this->addAttributes('price', $request['prodPrice'], $postId);
+            $this->addAttributes('keywords', $request['keywords'], $postId);
+            $this->addAttributes('metadesc', $request['metadesc'], $postId);
+            $this->addAttributes('currency', $request['currency'], $postId);
+            $this->addAttributes('price', $request['prodPrice'], $postId);
+            $this->addAttributes('purchase', $request['prodPurchase'], $postId);
+            $this->addAttributes('quantity', $request['prodqty'], $postId);
+            $this->addAttributes('stock', $request['stock'], $postId);
+            $this->addAttributes('purchase', $request['prodPurchase'], $postId);
+            //$this->addAttributes('currency', $request['currency'], $postId);
 
-            $this->addAttributes('showQty', $request['showQty'], $posts->id);
-            $this->addAttributes('showPrice', $request['showPrice'], $posts->id);
-            $this->addAttributes('showPrice', $request['showPrice'], $posts->id);
-            $this->addAttributes('showStock', $request['showStock'], $posts->id);
-            $this->addAttributes('showDesc', $request['showDesc'], $posts->id);
+            $this->addAttributes('showQty', $request['showQty'], $postId);
+            $this->addAttributes('showPrice', $request['showPrice'], $postId);
+            $this->addAttributes('showPrice', $request['showPrice'], $postId);
+            $this->addAttributes('showStock', $request['showStock'], $postId);
+            $this->addAttributes('showDesc', $request['showDesc'], $postId);
             //echo $request['hasbuyurl'];exit;
             if($request['hasbuyurl'])
-              $this->addAttributes('buyurl', $request['buyurl'], $posts->id);
+              $this->addAttributes('buyurl', $request['buyurl'], $postId);
             else
-              $this->addAttributes('buyurl', '', $posts->id);
+              $this->addAttributes('buyurl', '', $postId);
 
             if($request['imagespath']!="")
-              $this->addAttributes('images', serialize($request['imagespath']), $posts->id);
+              $this->addAttributes('images', serialize($request['imagespath']), $postId);
         }
         catch ( Illuminate\Database\QueryException $e) {
             var_dump($e->errorInfo);
@@ -342,6 +352,7 @@ class PostsController extends Controller
      */
     public function storeCategory(Request $request)
     {
+
       try {
         //$cmn = new CommonController();
         if($request['catid']!="")
@@ -625,7 +636,7 @@ class PostsController extends Controller
           $cat = Postcat::where('id', '=', $id)->first();
           if($cat->type=='product')
           {
-            $delProdRelation = Psc_relation::where('catid', $id)->delete();//Psc_relation::destroy()
+            //$delProdRelation = Psc_relation::where('catid', $id)->delete();//Psc_relation::destroy()
             $delCatRelation = Cat_relation::where('catid', $id)->delete();
           }
           elseif($cat->type=='category' and $cat->parent==0)
@@ -637,6 +648,74 @@ class PostsController extends Controller
       return back()->with('succ', 'One item deleted');
     }
 
+
+    /*
+     * Product's Brand section starts here
+     */
+    public function brandIndex($id=""){
+        $brands = Brands::all();
+        if($id!="")
+        {
+            $editcat = Brands::where('id', $id)->first();
+            return view('admin.price.brandindex')->with('brands', $brands)
+                ->with('editcat', $editcat);
+
+        }
+
+        return view('admin.posts.brandindex');
+
+    }
+
+    public function brandstore(Request $request){
+        try {
+            if($request['catid']!="")
+                $postcat = Brands::where('id', $request['catid'])->first();
+            else
+                $postcat = new Brands();
+
+            $postcat->title = $request['brandName'];
+            $postcat->content = $request['description'];
+            if(empty($request['slug']))
+                $slug = $this->generateSeoURL($request['brandName']);
+            else
+                $slug = $request['slug'];
+
+            $postcat->slug = $this->getUniqueSlug($slug, $postcat->id);
+            $postcat->logo = $request['filepath'];
+            $postcat->status = $request['status'];
+            //echo $postcat->slug;exit;
+
+            //print_r($postcat); die();
+            if($request['catid']!="")
+            {
+                $postcat->update();
+                $request->session()->flash('succ', 'One item updated successfully!!!');
+            }
+            else
+            {
+                $postcat->save();
+                $request->session()->flash('succ', 'One item added successfully!!!');
+            }
+
+        } catch ( Illuminate\Database\QueryException $e) {
+            var_dump($e->errorInfo);
+            $request->session()->flash('fail', 'Due to some technical issues the request cannot be done!!!');
+        }
+        return redirect('/admin/price/brand');
+    }
+
+    public function branddestroy($id){
+        try {
+            Brands::destroy($id);
+        } catch ( Illuminate\Database\QueryException $e) {
+            var_dump($e->errorInfo);
+        }
+        return redirect('/admin/price/brand')->with('succ', 'One item deleted');
+    }
+
+    /*
+     * Product's Brand section ends here
+     */
 
     /* --------------------------- Page controller --------------------------*/
     public function generateSeoURL($string, $wordLimit = 0)

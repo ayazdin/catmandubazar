@@ -135,8 +135,8 @@
           </ul>
         </li>-->
 
-        <li class="treeview">
-          <a href="/admin/product/list">
+        <li class="active treeview">
+          <a href="{{url('/admin/product/list')}}">
             <i class="fa fa-file-text"></i> <span>Products</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -144,19 +144,25 @@
           </a>
           <ul class="treeview-menu">
             <li>
-              <a href="/admin/product/list">
+              <a href="{{url('/admin/product/list')}}">
                 <i class="fa fa-table"></i>
                 <span>List Products</span>
               </a>
             </li>
             <li>
-              <a href="/admin/product/add">
+              <a href="{{url('/admin/product/add')}}">
                 <i class="fa fa-edit"></i> <span>Add Products</span>
               </a>
             </li>
             <li>
-              <a href="/admin/product/category/add">
+              <a href="{{url('/admin/product/category/add')}}">
                 <i class="fa fa-puzzle-piece"></i> <span>Category</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/admin/product/brand">
+                <i class="fa fa-puzzle-piece"></i> <span>Brand</span>
               </a>
             </li>
             <!-- <li>
