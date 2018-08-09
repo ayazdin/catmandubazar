@@ -1,17 +1,3 @@
-<?php
-$price="";$currency="";
-if(!empty($postmeta))
-{
-    foreach($postmeta as $pm)
-    {
-        if($pm->meta_key=='price')
-            $price = $pm->meta_value;
-        if($pm->meta_key=='currency')
-            $currency = $pm->meta_value;
-    }
-}
-?>
-
 <div class="row mar-bot-30 featured">
     <div class="block-ttl auto-search col-sm-12">
         <h2><span>Our Products</span> <hr></h2>
@@ -111,7 +97,5 @@ if(!empty($postmeta))
             </div>
         </div>
     @endforeach
-
-
 
 </div>

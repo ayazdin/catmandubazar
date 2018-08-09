@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use DB;
 use App\Models\Posts;
 use App\Models\Postcat;
 use App\Models\Postmeta;
+use App\Models\Cat_relation;
 
 class FrontendController extends Controller
 {
@@ -24,9 +25,19 @@ class FrontendController extends Controller
         $post = Posts::where('clean_url', $slug)->first();
         $postId = $post->id;
         $postmeta = Postmeta::where('postid', $postId)->get();
-
+        $category = Cat_relation::where('postid',$postId)->first();
+        $catId = $category->catid;
+        $relatedprods = DB::table('posts')
+            ->join('cat_relations', 'cat_relations.postid', '=', 'posts.id')
+            ->join('postcats', 'postcats.id', '=', 'cat_relations.catid')
+            ->where('posts.id', '!=', $postId)
+            ->where('postcats.id', '=', $catId)
+            ->select('posts.*')
+            ->limit(4)
+            ->get();
         return view('frontend.singleproduct')->with('post',$post)
-                                             ->with('postmeta',$postmeta);
+                                             ->with('postmeta',$postmeta)
+                                             ->with('relatedprods',$relatedprods);
     }
 
     public function productEnquiry(Request $request){

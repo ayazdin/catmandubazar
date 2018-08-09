@@ -1,11 +1,43 @@
+header .hed-logo {
+    font-size: 32px;
+    margin-top: -7px;
+    color: #fff;
+    font-weight: 600
+}
+
+.navbar-fixed {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 8888;
+}
+
 a:focus, a:hover {
     color: #014c8c;
     text-decoration: none;
 }
-.sharebuttons{text-align:right;margin-bottom: 20px;border-bottom: 1px solid #d7d7d7;padding-bottom: 10px;}
-.fb-share-button{top: -7px;}
-.sharebuttons h2 {font-size: 24px; text-align: left;}
-.sharebuttons h2 span{display: block; font-size: 14px; margin-top: 10px;}
+
+.sharebuttons {
+    text-align: right;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #d7d7d7;
+    padding-bottom: 10px;
+}
+
+.fb-share-button {
+    top: -7px;
+}
+
+.sharebuttons h2 {
+    font-size: 24px;
+    text-align: left;
+}
+
+.sharebuttons h2 span {
+    display: block;
+    font-size: 14px;
+    margin-top: 10px;
+}
 
 .productimage {
     text-align: center;
@@ -23,17 +55,23 @@ a:focus, a:hover {
 .featured .wrap .f-top {
     height: 177px;
 }
+
 /*product listing hover effect*/
- .featured .switch .overlay{
-     background: rgba(0, 0, 0, 0.5);
-     width: 89.5%;
-     height: 58%;
-     opacity: 0;
-     position: absolute;
-     top: 0;
-     left: 15px;
+.featured .switch .overlay {
+    background: rgba(0, 0, 0, 0.5);
+    width: 89.5%;
+    height: 58%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 15px;
 }
-.switch{display:block;height: 0px;}
+
+.switch {
+    display: block;
+    height: 0px;
+}
+
 .switch .button-group {
     background-color: #333;
     left: 0;
@@ -46,7 +84,12 @@ a:focus, a:hover {
     width: 100%;
     z-index: 99;
 }
-.switch:hover .button-group, .switch:hover .overlay , .switch:hover .view-detail  { opacity: 1; bottom:0px;}
+
+.switch:hover .button-group, .switch:hover .overlay, .switch:hover .view-detail {
+    opacity: 1;
+    bottom: 0px;
+}
+
 .switch .button-group a {
     border-left: 1px solid #777;
     color: #fff;
@@ -58,7 +101,94 @@ a:focus, a:hover {
     text-transform: uppercase;
     width: 50%;
 }
+
 .switch .button-group a:first-child {
     border-left: 0 solid #555;
 }
+
 /*product listing hover effect*/
+.productpage {
+    margin-bottom: 20px
+}
+
+.productpage .is_stuck {
+    margin-top: 68px
+}
+
+.productpage .prodimageslider {
+    border: 1px solid #ccc;
+    padding: 3px
+}
+
+.productpage .prodimageslider img.w-100 {
+    width: 80% !important;
+    height: 396px;
+    object-fit: contain;
+    text-align: center;
+    margin: 0px auto;
+}
+
+.productpage .enqcartbutt {
+    margin-top: 20px
+}
+
+.productpage .enqcartbutt a {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    background-color: #ff9f00;
+    color: #fff;
+    font-size: 18px
+}
+
+.productpage .enqcartbutt a:hover {
+    background-color: #fb641b;
+    font-size: 20px;
+}
+
+.proddetail .shortdesc {
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.proddetail .shortdesc .title {
+
+    padding: 5px;
+
+    box-shadow: 2px 5px 9px 2px rgba(0,0,0,.2);
+    background: rgba(255, 255, 255, 0.25);
+
+}
+
+.proddetail .shortdesc .prodprice span {
+    font-weight: bold
+}
+
+.proddetail .productcontent {
+    border: 1px dashed #ccc;
+    padding: 10px;
+    text-align: justify;
+    margin-bottom: 20px
+}
+
+.proddetail .productcontent .subtitle {
+    border-bottom: 1px solid #ccc;
+}
+
+.proddetail .productoptions {
+    margin-bottom: 5px
+}
+
+.proddetail .productoptions ul {
+    display: inline-block;
+    padding-left: 7px;
+    margin: 0px
+}
+
+.proddetail .productoptions ul li {
+    list-style: none;
+    border-right: 1px solid #ccc;
+    margin-right: 5px;
+    padding-right: 5px;
+    display: inline-block
+}

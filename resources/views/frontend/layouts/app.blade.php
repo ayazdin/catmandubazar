@@ -26,26 +26,17 @@
 </head>
 
 <body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=1536813856603295&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
 
 @include('frontend/includes.header')
 
 <div class="container mar-top-40">
-    <div class="latest-news">
+
         <div class="row">
             <div class="col-sm-12">
                 @yield('content')
-
             </div>
         </div>
-    </div>
+
 </div>
 
 @include('frontend/includes.footer')
@@ -60,6 +51,8 @@
 <script src="{{url('/frontend/js/bootstrap.min.js')}}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{url('/frontend/js/ie10-viewport-bug-workaround.js')}}"></script>
+<script src="{{url('/frontend/js/jquery.sticky-kit.min.js')}}"></script>
+
 <script>
     $(function () {
         $('#imgCarousel').on('slide.bs.carousel', function (e) {
@@ -70,7 +63,32 @@
                 $('#txtCarousel').carousel('prev')
             }
         })
+
+
+        "use strict";
+        var $navbar = $("header"),
+                y_pos = $navbar.offset().top,
+                height = $navbar.height();
+
+        $(document).scroll(function() {
+            var scrollTop = $(this).scrollTop();
+
+            if (scrollTop > y_pos + height) {
+                $navbar.addClass("navbar-fixed").animate({
+                    top: 0
+                });
+            } else if (scrollTop <= y_pos) {
+                $navbar.removeClass("navbar-fixed").clearQueue().animate({
+                    top: "-48px"
+                }, 0);
+            }
+        });
     });
+    $(document).ready(function(){
+        //  sticky product header
+        $(".productpage .prodimage").stick_in_parent("sticky_class");
+
+    })
 </script>
 </body>
 </html>
