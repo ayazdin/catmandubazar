@@ -1,60 +1,63 @@
-<div class="content-wrapper">
-	<!-- Content Header (Page header) -->
-	<section class="content-header">
+<div class="box box-success">
+	<div class="box-header with-border">
+		<h3 class="box-title">{{ trans('labels.backend.post.all_post') }}</h3>
 
-		@if(!empty($posts))
-		<div class="row">
-	    	<div class="col-xs-12">
-		      	<div class="box">
-		      		<div class="box-header">
-		      			<h3 class="box-title">Posts</h3>
-		      		</div>
-					<div class="box-body table-responsive no-padding">
-						@if(!empty($succ))
-						<div class="alert alert-success" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<strong>Success!</strong> {{ $succ }}
-						</div>
-						@endif
-						@if(!empty(session('succ')))
-						<div class="alert alert-success" role="alert">
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<strong>Success!</strong> {{ session('succ') }}
-						</div>
-						@endif
-						<table class="table table-hover">
-						    <tr>
-							    <th>Title</th>
-		          		<th>Excerpt</th>
-							    <th>Published</th>
-							    <th></th>
-						    </tr>
-                <!--inject('post', 'App\Http\Controllers\Posts\PostsController')-->
-							@foreach ($posts as $post)
-							<tr>
-              	<td>{{ $post->title }}</td>
-                <td>{{ $post->excerpt }}</td>
-                <td>{!! $post->created_at!!}</td>
-              	<td>
-									<a href="/admin/post/edit/{{$post->id}}">Edit</a> |
-									<a href="/admin/post/delete/{{$post->id}}">Delete</a>
-								</td>
-              </tr>
-							@endforeach
-						</table>
-			        </div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-	    	<div class="col-xs-12">
-		      	<div class="box box-default box-solid">
-		      		<div class="box-body">
-		              {{ $posts->links('admin.partials.paginators') }}
-		            </div>
-			    </div>
-			</div>
-		</div>
-		@endif
-	</section>
-</div>
+		<div class="box-tools pull-right">
+			{{--@include('backend.products.includes.partials.page-header-buttons')--}}
+		</div><!--box-tools pull-right-->
+
+	</div><!-- /.box-header -->
+
+	<div class="box-body">
+		<div class="table-responsive">
+			<table id="article-table" class="table table-condensed table-hover">
+				<thead>
+				<tr>
+					<th>{{ trans('labels.backend.post.table.title') }}</th>
+					<th>{{ trans('labels.backend.post.table.slug') }}</th>
+					<th>{{ trans('labels.backend.post.table.status') }}</th>
+					<th>{{ trans('labels.backend.post.table.created') }}</th>
+					<th>{{ trans('labels.backend.post.table.last_updated') }}</th>
+					<th>{{ trans('labels.general.actions') }}</th>
+				</tr>
+				</thead>
+				<tbody>
+				@if(!empty($posts))
+					@forelse ($posts as $post)
+						<tr>
+							<td> {!! $post->title !!} </td>
+							<td>{!!$post->clean_url!!}</td>
+							<td>
+								@if ($post->status == 1)
+									Publish
+								@else
+									Unpublish
+								@endif
+							</td>
+							<td>{!!$post->created_at!!}</td>
+							<td>{!!$post->updated_at!!}</td>
+							<td>
+								{{--<a href="{{ route('admin.page.page.show',$product->id) }}" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"></i></a>--}}
+								<a href="{{ route('admin.post.editPost',$post->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
+								<a data-method="delete" data-trans-button-cancel="Cancel" data-trans-button-confirm="Delete" data-trans-title="Are you sure you want to do this?" class="btn btn-xs btn-danger" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
+									<form action="{{ route('admin.post.destroyPost',$post->id) }}" method="POST" name="delete_item" style="display:none">
+										<input type="hidden" name="_method" value="delete">
+										<input type="hidden" name="_token" value="{{ Session::token() }}">
+									</form>
+								</a>
+								{{--<a href="{{ route('admin.product.listStock',$product->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="View Stock"></i></a>--}}
+							</td>
+						</tr>
+					@empty
+						<tr>
+							<td colspan="6">No Posts added</td>
+						</tr>
+					@endforelse
+				@endif
+				</tbody>
+
+
+			</table>
+		</div><!--table-responsive-->
+	</div><!-- /.box-body -->
+</div><!--box-->

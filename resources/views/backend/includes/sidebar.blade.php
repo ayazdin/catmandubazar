@@ -131,14 +131,14 @@
                 <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/product*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/product*'), 'display: block;') }}">
 
 
-                    <li class="{{ active_class(Active::checkUriPattern('admin/product')) }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/product/list')) }}">
                         <a href="{{ route('admin.product.indexProduct') }}">
                             <i class="fa fa-circle-o"></i>
                             <span>{{ trans('menus.backend.product.product') }}</span>
                         </a>
                     </li>
 
-                    <li class="{{ active_class(Active::checkUriPattern('admin/product/create')) }}">
+                    <li class="{{ active_class(Active::checkUriPattern('admin/product/add')) }}">
                         <a href="{{ route('admin.product.createProduct') }}">
                             <i class="fa fa-circle-o"></i>
                             <span>{{ trans('menus.backend.product.add') }}</span>
@@ -158,6 +158,42 @@
                             <span>Product Enquiries</span>
                         </a>
                     </li>
+
+
+                </ul>
+            </li>
+
+            {{--Post--}}
+            <li class="{{ active_class(Active::checkUriPattern('admin/post*')) }} treeview">
+                <a href="#">
+                    <i class="fa fa-file-text"></i>
+                    <span>{{ trans('menus.backend.post.main') }}</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu {{ active_class(Active::checkUriPattern('admin/post*'), 'menu-open') }}" style="display: none; {{ active_class(Active::checkUriPattern('admin/post*'), 'display: block;') }}">
+
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/post/list')) }}">
+                        <a href="{{ route('admin.post.indexPost') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <span>{{ trans('menus.backend.post.post') }}</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/post/add')) }}">
+                        <a href="{{ route('admin.post.createPost') }}">
+                            <i class="fa fa-circle-o"></i>
+                            <span>{{ trans('menus.backend.post.add') }}</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ active_class(Active::checkUriPattern('admin/post/category*')) }}">
+                        <a href="{{url('admin/post/category/add')}}">
+                            <i class="fa fa-circle-o"></i>
+                            <span>{{ trans('menus.backend.post.category') }}</span>
+                        </a>
+                    </li>
+
 
 
                 </ul>

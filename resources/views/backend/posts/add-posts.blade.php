@@ -1,15 +1,14 @@
-@extends('admin.layouts.admin-app')
+@extends('backend.layouts.app')
 
-@section('sidebar')
-	@include('admin.partials.sidebar')
+@section ('title', trans('labels.backend.post.management'))
+
+@section('page-header')
+	<h1>
+		{{ trans('labels.backend.post.management') }}
+		<small>{{ trans('labels.backend.product.add_post') }}</small>
+	</h1>
 @endsection
 
 @section('content')
-	@include('admin.posts.add-posts-form')
-	@include('admin.partials.footer')
-@endsection
-
-@section('footer-script')
-	@include('admin.partials.footer-script')
-	@include('admin.posts.posts-scripts')
+	@include('backend.posts.add-posts-form')
 @endsection

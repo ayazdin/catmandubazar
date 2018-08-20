@@ -12,12 +12,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 class PostCatController extends Controller
 {
-    public function getCategoryList($list="", $sel="")
+    public function getCategoryList($cattype="",$list="", $sel="")
     {
         //echo "sjdhf sjdfhsjdf";exit;
         $categories="";
         $output="";
-        $parents = $this->getParent();
+        $parents = $this->getParent($cattype);
 
         if(!empty($parents))
         {
@@ -54,9 +54,9 @@ class PostCatController extends Controller
             return $categories;
     }
 
-    public function getParent()
+    public function getParent($cattype="")
     {
-        return Postcat::where('type', '=', 'category')
+        return Postcat::where('type', '=', $cattype)
             ->where('parent', '=', '0')
             ->get();
     }

@@ -62,6 +62,12 @@ return [
             'category'      => 'Product Category',
             'add_product'      => 'Add New Product',
         ],
+        'post' => [
+            'main'      => 'Post Management',
+            'post'       => 'All Posts',
+            'add'         => 'Add New Post',
+            'category'      => 'Post Category',
+        ],
     ],
 
     'language-picker' => [

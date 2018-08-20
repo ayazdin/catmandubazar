@@ -36,5 +36,27 @@ Route::group([
 
         //enquiry section
         Route::get('/enquiry','PostController@enquiryList')->name('enquiryList');
+        Route::delete('/enquiry/delete/{id}','PostController@destroyEnquiry')->name('destroyEnquiry');
+    });
+});
+
+Route::group([
+    'prefix'    =>  'post',
+    'as'        =>  'post.',
+],function(){
+    Route::group(['namespace'=>'Posts'],function(){
+        //Post Category
+        Route::get('/category/add','PostController@createPostCategory')->name('createPostCategory');
+        Route::get('/category/add/{id}','PostController@createPostCategory')->name('createPostCategory');
+        Route::post('/store-category','PostController@storePostCategory')->name('storePostCategory');
+        Route::get('/category/delete/{id}','PostController@destroyPostCategory')->name('destroyPostCategory');
+
+        //Post entry
+        Route::get('/list','PostController@indexPost')->name('indexPost');
+        Route::get('/add','PostController@createPost')->name('createPost');
+        Route::post('/store','PostController@storePost')->name('storePost');
+        Route::get('/edit/{id}','PostController@editPost')->name('editPost');
+        Route::delete('/delete/{id}','PostController@destroyPost')->name('destroyPost');
+
     });
 });

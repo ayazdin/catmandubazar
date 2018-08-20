@@ -184,6 +184,38 @@ return [
 
 
         ],
+
+        'post' => [
+            'management'          => 'Post Management',
+            'category'            => 'Post Categroy',
+            'add_category'        => 'Add New Category',
+            'edit_category'       => 'Update Category',
+            'cattable' => [
+                'created'        => 'Created',
+                'email'          => 'E-mail',
+                'id'             => 'ID',
+                'last_updated'   => 'Last Updated',
+                'name'           => 'Name',
+                'slug'           => 'slug',
+                'total'          => 'Post total|Posts total',
+                'status'         => 'Post Status',
+            ],
+            'all_post'       =>  'All Post',
+            'add_post'       =>  'Add New Post',
+            'table' => [
+                'created'        => 'Created',
+                'email'          => 'E-mail',
+                'id'             => 'ID',
+                'last_updated'   => 'Last Updated',
+                'title'          => 'Post Title',
+                'slug'           => 'Post slug',
+                'total'          => 'Post total|Posts total',
+                'status'          => 'Post Status',
+            ],
+
+
+        ],
+
     ],
 
     'frontend' => [

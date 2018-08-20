@@ -20,7 +20,7 @@
         </div><!-- /.box-body -->
     </div><!--box box-success-->
 
-    <div class="box box-info">
+    {{--<div class="box box-info">
         <div class="box-header with-border">
             <h3 class="box-title">{{ trans('history.backend.recent_history') }}</h3>
             <div class="box-tools pull-right">
@@ -30,5 +30,5 @@
         <div class="box-body">
             {!! history()->render() !!}
         </div><!-- /.box-body -->
-    </div><!--box box-success-->
+    </div><!--box box-success-->--}}
 @endsection

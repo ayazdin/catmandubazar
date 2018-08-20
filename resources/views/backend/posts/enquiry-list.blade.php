@@ -53,7 +53,7 @@
                                     {{--<a href="{{ route('admin.page.page.show',$product->id) }}" class="btn btn-xs btn-info"><i class="fa fa-search" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"></i></a>--}}
                                     <a href="{{ route('admin.product.editProduct',$product->id) }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i></a>
                                     <a data-method="delete" data-trans-button-cancel="Cancel" data-trans-button-confirm="Delete" data-trans-title="Are you sure you want to do this?" class="btn btn-xs btn-danger" style="cursor:pointer;" onclick="$(this).find(&quot;form&quot;).submit();"><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"></i>
-                                        <form action="{{ route('admin.product.destroyProduct',$product->id) }}" method="POST" name="delete_item" style="display:none">
+                                        <form action="{{ route('admin.product.destroyEnquiry',$product->id) }}" method="POST" name="delete_item" style="display:none">
                                             <input type="hidden" name="_method" value="delete">
                                             <input type="hidden" name="_token" value="{{ Session::token() }}">
                                         </form>

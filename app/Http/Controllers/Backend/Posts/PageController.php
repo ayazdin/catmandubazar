@@ -46,7 +46,8 @@ class PageController extends Controller
 
             $posts->title = $request['prodTitle'];
 
-            $posts->clean_url = $request['prodSlug'];
+            $slug = $request['prodSlug'];
+            $posts->clean_url =  $pc->getUniqueSlug($slug,$posts->id);
 
             if($request['description']!="")
                 $posts->content = $request['description'];

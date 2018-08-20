@@ -1,14 +1,36 @@
-@extends('admin.layouts.admin-app')
+@extends('backend.layouts.app')
 
-@section('sidebar')
-	@include('admin.partials.sidebar')
+@section ('title', trans('labels.backend.post.management'))
+
+@section('after-styles')
+	{{ Html::style("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css") }}
+@endsection
+
+@section('page-header')
+	<h1>
+		{{ trans('labels.backend.post.management') }}
+		<small>{{ trans('labels.backend.post.all_post') }}</small>
+	</h1>
 @endsection
 
 @section('content')
-	@include('admin.posts.list-posts')
-	@include('admin.partials.footer')
+	@include('backend.posts.list-posts')
+
 @endsection
 
-@section('footer-script')
-	@include('admin.partials.footer-script')
+@section('after-scripts')
+	{{ Html::script("https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js") }}
+	{{ Html::script("js/backend/plugin/datatables/dataTables-extend.js") }}
+
+	<script>
+		$(function () {
+			$('#article-table').DataTable({
+				"lengthMenu": [[ 25, 50, -1], [ 25, 50, "All"]],
+				dom: 'lfrtip',
+				processing: false,
+				autoWidth: false,
+				ordering: false,
+			});
+		});
+	</script>
 @endsection

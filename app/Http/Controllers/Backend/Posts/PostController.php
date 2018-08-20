@@ -19,7 +19,7 @@ class PostController extends Controller
     //Product Category Start
         public function createProductCategory($id=''){
             $catCtrl = new PostCatController();
-            $postcat = $catCtrl->getCategoryList();
+            $postcat = $catCtrl->getCategoryList('category');
             $subcategories = Postcat::where('type', '=', 'category')
                 ->where('parent', '!=', '0')
                 ->get();
@@ -109,8 +109,7 @@ class PostController extends Controller
         public function createProduct(){
             $catCtrl = new PostCatController();
 
-            $ddlCat = $catCtrl->getCategoryList();
-
+            $ddlCat = $catCtrl->getCategoryList('category');
             $proType = Postcat::where('type','=', 'product')->orderBy('catorder', 'ASC')->get();
             $typeLi = $catCtrl->getCategoryLi($proType);
             $sliderCat = $this->getPostsByType("home", false);
@@ -135,7 +134,8 @@ class PostController extends Controller
             if(empty($request['prodSlug']))
                 $posts->clean_url = $this->generateSeoURL($request['prodTitle']);
             else
-                $posts->clean_url = $request['prodSlug'];
+                $slug = $request['prodSlug'];
+            $posts->clean_url = $this->getUniquePostSlug($slug, $posts->id);
 
             if($request['description']!="")
                 $posts->content = $request['description'];
@@ -271,7 +271,7 @@ class PostController extends Controller
                 }
             }
             //print_r($sel);//exit;
-            $ddlCat = $catCtrl->getCategoryList('', $sel);
+            $ddlCat = $catCtrl->getCategoryList('category','', $sel);
             //print_r($ddlCat);exit;
             $proType = Postcat::where('type','=', 'product')->orderBy('catorder', 'ASC')->get();
             $typeLi = $catCtrl->getCategoryLi($proType);
@@ -286,6 +286,7 @@ class PostController extends Controller
         public function destroyProduct($id){
             Postmeta::where('postid', $id)->delete();
             Posts::where('id',$id)->delete();
+            Cat_relation::where('postid', $id)->delete();
             return redirect()->route('admin.product.indexProduct')->withFlashSuccess(__('Product deleted successfully'));
         }
     //product End
@@ -296,8 +297,180 @@ class PostController extends Controller
 
         return view('backend.posts.enquiry-list')->with('enquiries',$enquiries);
     }
+
+    public function destroyEnquiry($id){
+        Enquiry::where('id',$id)->delete();
+        return redirect()->route('admin.product.enquiryList')->withFlashSuccess(__('Enquiry deleted successfully'));
+    }
     //enquiry end
 
+    //Posts starts
+    public  function indexPost(){
+        $products = Posts::where('ctype', '=', 'post')
+            ->get();
+        return view('backend.posts.posts')->with('posts', $products);
+    }
+
+    public function createPost(){
+        $catCtrl = new PostCatController();
+        $ddlCat = $catCtrl->getCategoryList('post');
+       // dd($ddlCat);
+        return view('backend.posts.add-posts')->with('ddlCat', $ddlCat);
+    }
+
+    public function storePost(Request $request){
+        try{
+            if(Auth::check())
+                $user = Auth::user();
+            if($request['postid']!="")
+                $posts = Posts::where('id', $request['postid'])->first();
+            else
+                $posts = new Posts();
+
+            $posts->title = $request['prodTitle'];
+            if(empty($request['prodSlug']))
+                $posts->clean_url = $this->generateSeoURL($request['prodTitle']);
+            else
+                $slug = $request['prodSlug'];
+            $posts->clean_url = $this->getUniquePostSlug($slug, $posts->id);
+
+            if($request['description']!="")
+                $posts->content = $request['description'];
+            if($request['excerpt']!="")
+                $posts->excerpt = $request['excerpt'];
+            $posts->status = $request['rdoPublish'];
+            $posts->ctype = $request['ctype'];
+            if($request['featuredimage']!="")
+                $posts->image = $request['featuredimage'];
+            else
+                $posts->image = "";
+            if(isset($request['menuorder']))
+                $posts->menu_order = $request['menuorder'];
+
+            $posts->userid = $user->id;
+            //dd($posts);
+            if($request['postid']!="")
+                $posts->update();
+            else
+                $posts->save();
+
+            if(!empty($request['category']))
+                $this->addCategoryRelation($request['category'], $posts->id);
+
+            $this->addAttributes('keywords', $request['keywords'], $posts->id);
+            $this->addAttributes('metadesc', $request['metadesc'], $posts->id);
+        }
+        catch ( Illuminate\Database\QueryException $e) {
+            var_dump($e->errorInfo);
+            $request->session()->flash('fail', 'Due to some technical issues the request cannot be done!!!');
+        }
+        if($request['postid']!="")
+            return back()->withFlashSuccess( 'One item updated successfully!!!');
+        else
+            return back()->withFlashSuccess( 'One item added successfully!!!');
+    }
+
+    public  function editPost($id){
+        $sel=array();
+        $catCtrl = new PostCatController();
+        $post = Posts::where('id', $id)->first();
+        $postmeta = Postmeta::where('postid', $id)->get();
+        $catrel = Cat_relation::where('postid','=', $id)->get();
+
+        if($catrel->isNotEmpty())
+        {
+            foreach($catrel as $cr)
+            {
+                $sel[]=$cr->catid;
+            }
+        }
+        $ddlCat = $catCtrl->getCategoryList('post','', $sel);
+        return view('backend.posts.add-posts')->with('post', $post)
+            ->with('postmeta', $postmeta)
+            ->with('ddlCat', $ddlCat)
+            ;
+
+    }
+    public function destroyPost($id){
+        Postmeta::where('postid', $id)->delete();
+        Posts::where('id',$id)->delete();
+        Cat_relation::where('postid', $id)->delete();
+        return redirect()->route('admin.post.indexPost')->withFlashSuccess(__('Post deleted successfully'));
+    }
+
+    public function createPostCategory($id=''){
+        $catCtrl = new PostCatController();
+        $postcat = $catCtrl->getCategoryList('post');
+        $subcategories = Postcat::where('type', '=', 'post')
+            ->where('parent', '!=', '0')
+            ->get();
+        if($id!="")
+        {
+            $editcat = Postcat::where('id', $id)->first();
+            return view('backend.posts.add-post-category')->with('postcat', $postcat)
+                ->with('editcat', $editcat)
+                ->with('subcategories', $subcategories)
+                ->with('categoryType', 'category');
+        }
+        return view('backend.posts.add-post-category')->with('postcat', $postcat)
+            ->with('subcategories', $subcategories)
+            ->with('categoryType', 'category');
+
+    }
+    public  function storePostCategory(Request $request){
+        try {
+            //$cmn = new CommonController();
+            if($request['catid']!="")
+                $postcat = Postcat::where('id', $request['catid'])->first();
+            else
+                $postcat = new Postcat();
+
+            $postcat->name = $request['catName'];
+
+            $slug = $request['slug'];
+            if(!empty($request['categoryType']))
+                $postcat->type = $request['categoryType'];
+            else
+                $postcat->type = 'category';
+            $postcat->slug = $this->getUniqueSlug($slug, $postcat->id);
+            $postcat->parent = $request['subCat'];
+            $postcat->image = $request['filepath'];
+            //echo $postcat->slug;exit;
+
+            //dd($postcat);
+            if($request['catid']!="")
+            {
+                $postcat->update();
+                return back()->withFlashSuccess( 'One item updated successfully!!!');
+            }
+            else
+            {
+                $postcat->save();
+                return redirect('/admin/post/category/add')->withFlashSuccess('One item added successfully!!!');
+            }
+
+        } catch ( Illuminate\Database\QueryException $e) {
+            var_dump($e->errorInfo);
+            return redirect('/admin/post/category/add')->withFlashSuccess( 'Due to some technical issues the request cannot be done!!!');
+        }
+    }
+    public function destroyPostCategory($id){
+        try {
+            $cat = Postcat::where('id', '=', $id)->first();
+            if($cat->type=='post')
+            {
+                //$delProdRelation = Psc_relation::where('catid', $id)->delete();//Psc_relation::destroy()
+                $delCatRelation = Cat_relation::where('catid', $id)->delete();
+            }
+            elseif($cat->type=='category' and $cat->parent==0)
+                $delCatRelation = Cat_relation::where('catid', $id)->delete();
+            Postcat::destroy($id);
+        } catch ( Illuminate\Database\QueryException $e) {
+            var_dump($e->errorInfo);
+        }
+        return back()->withFlashSuccess('One item deleted');
+    }
+    //posts ends
 
     public function addAttributes($metaKey, $metaValue, $postid)
     {
@@ -322,6 +495,35 @@ class PostController extends Controller
         //}
     }
 
+    public function generateSeoURL($string, $wordLimit = 0)
+    {
+        $separator = '-';
+
+        if($wordLimit != 0){
+            $wordArr = explode(' ', $string);
+            $string = implode(' ', array_slice($wordArr, 0, $wordLimit));
+        }
+
+        $quoteSeparator = preg_quote($separator, '#');
+
+        $trans = array(
+            '&.+?;'                    => '',
+            '[^\w\d _-]'            => '',
+            '\s+'                    => $separator,
+            '('.$quoteSeparator.')+'=> $separator
+        );
+
+        $string = strip_tags($string);
+        foreach ($trans as $key => $val){
+            //$string = preg_replace('#'.$key.'#i'.(UTF8_ENABLED ? 'u' : ''), $val, $string);
+            $string = preg_replace('#'.$key.'#i', $val, $string);
+        }
+
+        $string = strtolower($string);
+
+        return trim(trim($string, $separator));
+    }
+
     public function getUniqueSlug($s, $catid="")
     {
         if($catid!="")
@@ -332,6 +534,20 @@ class PostController extends Controller
             $postcat = Postcat::where('slug', $s)->first();
         if(!empty($postcat))
             return $postcat->slug."-".date('md');
+        else
+            return $s;
+    }
+
+    public function getUniquePostSlug($s, $postid="")
+    {
+        if($postid!="")
+            $post = Posts::where('clean_url', $s)
+                ->where('id', '<>', $postid)
+                ->first();
+        else
+            $post = Posts::where('clean_url', $s)->first();
+        if(!empty($post))
+            return $post->clean_url."-".date('md');
         else
             return $s;
     }
