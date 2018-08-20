@@ -192,3 +192,26 @@ a:focus, a:hover {
     padding-right: 5px;
     display: inline-block
 }
+
+/*user section*/
+.userform {justify-content: center; margin-bottom: 60px;}
+.userform .form-group{display: flex}
+.userform .panel{border: 1px solid rgba(0, 0, 0, 0.125); margin-bottom:10px}
+
+.userform .panel-heading,.userform .fa-4{padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);}
+
+.userform .panel-body{
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+.userform .media-list{padding:0px}
+.userform .media-list .media-left{margin-right:10px}
+
+.userform .nav{margin-bottom: 10px}
+.userform .nav li{margin-right: 10px}
+/*user section*/

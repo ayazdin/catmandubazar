@@ -123,16 +123,17 @@ if(!empty($postmeta))
                                     </button>
                                 </div>
                                 <div class="modal-body">
-
+                                    <input type="hidden" class="form-controll" name="user_id" value="@if ($logged_in_user){{$logged_in_user->id}}@endif">
                                     <input type="hidden" class="form-control" name="productname" value="{{$post->title}}">
+                                    <input type="hidden" class="form-control" name="pid" value="{{$post->id}}">
 
                                     <div class="form-group">
                                         <label for="fullname" class="col-form-label">Full Name:</label>
-                                        <input type="text" class="form-control" name="fullname" value="">
+                                        <input type="text" class="form-control" name="fullname" value="@if ($logged_in_user){{$logged_in_user->name}}@endif">
                                     </div>
                                     <div class="form-group">
                                         <label for="emailid" class="col-form-label">Email Address *:</label>
-                                        <input type="email" class="form-control" name="emailid" value="" required>
+                                        <input type="email" class="form-control" name="emailid" value="@if ($logged_in_user){{ $logged_in_user->email }}@endif" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="col-form-label">Phone Number:</label>
@@ -158,22 +159,22 @@ if(!empty($postmeta))
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
 
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Oops....</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Oops....</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
 
-                                    This Feature is currently unavailable. You can make an enquiry.
+                                This Feature is currently unavailable. You can make an enquiry.
 
-                                </div>
-                                <div class="modal-footer">
-                                    {{--<input type="submit" name="submit" class="btn btn-primary" value="Send Enquiry">--}}
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                {{--<input type="submit" name="submit" class="btn btn-primary" value="Send Enquiry">--}}
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                {{--<button type="button" class="btn btn-primary">Save changes</button>--}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -186,29 +187,29 @@ if(!empty($postmeta))
                     <h2 class="title">{!! $post->title !!}</h2>
                     {!! $post->excerpt !!}
                     <div class="prodprice productoptions">
-                       Price : <span>{!! $currency .' '.$price !!}</span>
+                        Price : <span>{!! $currency .' '.$price !!}</span>
                     </div>
 
                     <?php
                     if(!empty($options))
-                      {
-                          foreach($options as $opt){
+                    {
+                    foreach($options as $opt){
 
-                            $optname = $opt['name'];
-                            $opts = $opt['options'];
-                        ?>
-                              <div class="productoptions prod<?php echo $optname?>">
-                                  <?php echo $optname?> :
-                                  <ul>
-                                    <?php
-                                        foreach($opts as $ot){
-                                            echo '<li>'.$ot.'</li>';
-                                        }
-                                      ?>
-                                  </ul>
-                              </div>
-                          <?php }
-                      }
+                    $optname = $opt['name'];
+                    $opts = $opt['options'];
+                    ?>
+                    <div class="productoptions prod<?php echo $optname?>">
+                        <?php echo $optname?> :
+                        <ul>
+                            <?php
+                            foreach($opts as $ot){
+                                echo '<li>'.$ot.'</li>';
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                    <?php }
+                    }
                     ?>
 
                 </div>
@@ -281,19 +282,20 @@ if(!empty($postmeta))
                                             </button>
                                         </div>
                                         <div class="modal-body">
-
+                                            <input type="hidden" class="form-controll" name="user_id" value="@if ($logged_in_user){{$logged_in_user->id}}@endif">
                                             <input type="hidden" class="form-control" name="productname" value="{{$product->title}}">
+                                            <input type="hidden" class="form-control" name="pid" value="{{$product->title}}">
                                             {{--<div class="form-group">
                                                 <label for="productname" class="col-form-label">Enquiry For:</label>
                                                 <input type="text" class="form-control" name="productname" value="{{$product->title}}" disabled>
                                             </div>--}}
                                             <div class="form-group">
                                                 <label for="fullname" class="col-form-label">Full Name:</label>
-                                                <input type="text" class="form-control" name="fullname" value="">
+                                                <input type="text" class="form-control" name="fullname" value="@if ($logged_in_user){{$logged_in_user->name}}@endif">
                                             </div>
                                             <div class="form-group">
                                                 <label for="emailid" class="col-form-label">Email Address *:</label>
-                                                <input type="email" class="form-control" name="emailid" value="" required>
+                                                <input type="email" class="form-control" name="emailid" value="@if ($logged_in_user){{ $logged_in_user->email }}@endif" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="phone" class="col-form-label">Phone Number:</label>

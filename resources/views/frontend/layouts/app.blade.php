@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -12,9 +12,8 @@
     <meta property="og:type" content="article"/>
     <meta property="og:url" content="@yield('url')"/>
     <meta property="og:image" content="@yield('image')"/>
-    {{--<link rel="icon" href="../../favicon.ico">--}}
-
     <title>@yield('title')</title>
+
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/starter-template/">
 
     <!-- Bootstrap core CSS -->
@@ -24,23 +23,19 @@
     <link href="{{url('/frontend/css/style.css')}}" rel="stylesheet">
     <link href="{{url('/frontend/css/custom.css')}}" rel="stylesheet">
 </head>
-
 <body>
 
 @include('frontend/includes.header')
-
 <div class="container mar-top-40">
 
-        <div class="row">
-            <div class="col-sm-12">
-                @yield('content')
-            </div>
+    <div class="row">
+        <div class="col-sm-12">
+            @yield('content')
         </div>
+    </div>
 
 </div>
-
 @include('frontend/includes.footer')
-
 
         <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -86,6 +81,7 @@
     });
     $(document).ready(function(){
         //  sticky product header
+        $('#enquiryModal').modal('show')
         $(".productpage .prodimage").stick_in_parent("sticky_class");
 
     })
