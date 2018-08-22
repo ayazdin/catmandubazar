@@ -327,9 +327,6 @@ if(!empty($postmeta))
 
         </div>
 
-
-
-
     </div>
 
 @endsection
