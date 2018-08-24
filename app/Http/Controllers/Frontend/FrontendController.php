@@ -121,4 +121,9 @@ class FrontendController extends Controller
         echo $output;
     }
 
+    public static function getThumbnail($image){
+        return substr_replace($image, '/thumbs', strrpos($image, "/"), 0);
+        
+    }
+
 }

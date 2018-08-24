@@ -162,22 +162,25 @@ class PostController extends Controller
                 $optNameList = explode(",", $request['optionNumber']);
             if($request['optName']!="")
                 $optionNames = $request['optName'];
-            $options="";
+            $options=array();
             $icount = 0;
-
+            //print_R($optNameList);
             if(!empty($optionNames))
             {
-                $options = array();
                 foreach($optNameList as $onl)
                 {
                     if($optionNames[$icount]!="")
                     {
-                        $options = array('name' => $optionNames[$icount],
-                            'options' => $request['optValue'.$onl]);
+                        $options[] = array('name' => $optionNames[$icount],
+                                         'options' => $request['optValue'.$onl]);
                         $icount++;
                     }
                 }
             }
+            /*echo '<pre>';
+            print_r($options);
+            echo '</pre>';*/
+            //die();
             //print_r($optionNames);exit;
             $priceSelCount = $request['priceSelCount'];
             $rPrice = $request['selPrice'];

@@ -18,7 +18,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{url('/frontend/css/bootstrap.min.css')}}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{url('/frontend/css/font-awesome.min.css')}}">
     <!-- Custom styles for this template -->
     <link href="{{url('/frontend/css/style.css')}}" rel="stylesheet">
     <link href="{{url('/frontend/css/custom.css')}}" rel="stylesheet">
@@ -47,7 +47,7 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="{{url('/frontend/js/ie10-viewport-bug-workaround.js')}}"></script>
 <script src="{{url('/frontend/js/jquery.sticky-kit.min.js')}}"></script>
-
+@yield('after-scripts')
 <script>
     $(function () {
         $('#imgCarousel').on('slide.bs.carousel', function (e) {
